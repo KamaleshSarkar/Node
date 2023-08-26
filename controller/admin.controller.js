@@ -18,7 +18,7 @@ class AdminController {
       if (req.user) {
         next();
       } else {
-        res.redirect("/admin");
+        res.redirect("/");
       }
     } catch (err) {
       throw err;
@@ -72,7 +72,7 @@ class AdminController {
       ) {
         console.log("Field Should not be Empty!");
         req.flash("message", "Field Should Not Be Empty!");
-        res.redirect("/admin/register");
+        res.redirect("/register");
       }
       req.body.image = req.file.filename;
       req.body.password = bcrypt.hashSync(
@@ -88,15 +88,15 @@ class AdminController {
         if (data && data._id) {
           console.log("Registration Successfully...!!");
           req.flash("message", "Registration Successful..!!");
-          res.redirect("/admin");
+          res.redirect("/");
         } else {
           console.log("Registration not Successfully...!!");
           req.flash("message", "Registration Not Successful!!");
-          res.redirect("/admin/register");
+          res.redirect("/register");
         }
       } else {
         console.log("Email is already Exsist");
-        res.redirect("/admin/register");
+        res.redirect("/register");
       }
     } catch (err) {
       throw err;
@@ -162,7 +162,7 @@ class AdminController {
           //set your cookie
 
           res.cookie("userToken", token);
-          res.redirect("/admin/dashboard");
+          res.redirect("/dashboard");
         } else {
           console.log("Wrong Password..");
         }
@@ -181,7 +181,7 @@ class AdminController {
     console.log("Cookies======>" + req.cookies);
     res.clearCookie("userToken");
     console.log("Cookie Cleared!");
-    res.redirect("/admin");
+    res.redirect("/");
   }
   /*< For User Managemnt...!> */
   /**
@@ -227,7 +227,7 @@ class AdminController {
       req.body.email = req.body.email.trim();
       if (!req.body.firstName || !req.body.lastName || !req.body.email) {
         console.log("Field Should be not Empty");
-        res.redirect("/admin/userView");
+        res.redirect("/userView");
       }
       req.body.image = req.file.filename;
       req.body.fullName = `${req.body.firstName} ${req.body.lastName}`;
@@ -237,14 +237,14 @@ class AdminController {
         if (userData && userData._id) {
           console.log("User Data Added Successfully");
           req.flash("message", "User data Added Successfully!!");
-          res.redirect("/admin/userView");
+          res.redirect("/userView");
         } else {
           console.log("User Data Added not Successfully");
-          res.redirect("/admin/userView");
+          res.redirect("/userView");
         }
       } else {
         console.log("Email is already exsist");
-        res.redirect("/admin/userView");
+        res.redirect("/userView");
       }
     } catch (err) {
       throw err;
@@ -262,11 +262,11 @@ class AdminController {
       if (dataDelete && dataDelete._id) {
         console.log("User Data Deleted");
         req.flash("message", "Data Deleted!!");
-        res.redirect("/admin/userView");
+        res.redirect("/userView");
       } else {
         console.log("User Data not Deleted");
         req.flash("message", "Data Not Deleted!");
-        res.redirect("/admin/userView");
+        res.redirect("/userView");
       }
     } catch (err) {
       throw err;
@@ -323,11 +323,11 @@ class AdminController {
         if (studentUpdate && studentUpdate._id) {
           console.log("User Updated");
           req.flash("message", "Data Updated!!");
-          res.redirect("/admin/userView");
+          res.redirect("/userView");
         } else {
           console.log("Something Went Wrong");
           req.flash("message", "Data Not Updated!");
-          res.redirect("/admin/userView");
+          res.redirect("/userView");
         }
       }
     } catch (err) {
@@ -384,18 +384,18 @@ class AdminController {
 
       if (!req.body.question || !req.body.answer) {
         console.log("Field Should Not Empty..!");
-        res.redirect("/admin/faqForm");
+        res.redirect("/faqForm");
       }
 
       let Data = await faqModel.create(req.body);
       if (Data && Data._id) {
         console.log("Question Added...!");
         req.flash("message", "Question Added Successful!!");
-        res.redirect("/admin/faqTable");
+        res.redirect("/faqTable");
       } else {
         console.log("Question added failled!!");
         req.flash("message", "Data entry Not Successful!!");
-        res.redirect("/admin/faqTable");
+        res.redirect("/faqTable");
       }
     } catch (err) {
       throw err;
@@ -413,10 +413,10 @@ class AdminController {
       if (faqDelete && faqDelete._id) {
         console.log("FAQ Data deleted...!!");
         req.flash("message", "FAQ Deleted!!");
-        res.redirect("/admin/faqTable");
+        res.redirect("/faqTable");
       } else {
         console.log("FAQ Data not deleted deleted...!!");
-        res.redirect("/admin/faqTable");
+        res.redirect("/faqTable");
       }
     } catch (err) {
       throw err;
@@ -455,11 +455,11 @@ class AdminController {
       if (questionUpdate && questionUpdate._id) {
         console.log("FAQ Updated");
         req.flash("message", "Data Updated!!");
-        res.redirect("/admin/faqTable");
+        res.redirect("/faqTable");
       } else {
         console.log("Something Went Wrong");
         req.flash("message", "Data Not Updated!");
-        res.redirect("/admin/faqTable");
+        res.redirect("/faqTable");
       }
     } catch (err) {
       throw err;
@@ -514,18 +514,18 @@ class AdminController {
       req.body.content = req.body.content.trim();
       if (!req.body.title || !req.body.writer || !req.body.content) {
         console.log("Field Should be not empty");
-        res.redirect("/admin/blogsTable");
+        res.redirect("/blogsTable");
       }
       req.body.image = req.file.filename;
       let Data = await blogsModel.create(req.body);
       if (Data && Data._id) {
         console.log("Blogs Are Added");
         req.flash("message", "BLOGS Added Successfully..!!");
-        res.redirect("/admin/blogsTable");
+        res.redirect("/blogsTable");
       } else {
         console.log("Blogs Are not Added");
         req.flash("message", "BLOGS Added Unsuccessfull..!!");
-        res.redirect("/admin/blogsTable");
+        res.redirect("/blogsTable");
       }
     } catch (err) {
       throw err;
@@ -543,11 +543,11 @@ class AdminController {
       if(deleteBlog && deleteBlog._id){
         console.log('Blogs Deleted..!');
         req.flash('message','BLOGS Deleted Successfully..!')
-        res.redirect('/admin/blogsTable')
+        res.redirect('/blogsTable')
       }else{
         console.log('Blogs not Deleted..!');
         req.flash('message','BLOGS Deleted unsuccessfully..!')
-        res.redirect('/admin/blogsTable')
+        res.redirect('/blogsTable')
       }
     } catch (err) {
       throw err
@@ -587,11 +587,11 @@ class AdminController {
      if (blogsUpdate && blogsUpdate._id) {
         console.log('Blog Updated');
         req.flash('message', 'Data Updated!!');
-        res.redirect('/admin/blogsTable');
+        res.redirect('/blogsTable');
       } else {
         console.log('Something Went Wrong');
         req.flash('message', 'Data Not Updated!');
-        res.redirect('/admin/blogsTable');
+        res.redirect('/blogsTable');
       }
     }
     catch (err) {
