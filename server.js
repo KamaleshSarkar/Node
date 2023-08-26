@@ -34,7 +34,7 @@ const jwtAuth = require("./middleware/authJwt");
 app.use(jwtAuth.authJwt);
 
 const adminRouter = require("./routes/admin.routes");
-app.use("/admin", adminRouter);
+app.use( adminRouter);
 
 
 
@@ -48,7 +48,7 @@ mongoose
   .then((res) => {
     app.listen(port, () => {
       console.log(`Db is connected`);
-      console.log(`Server is running on http://localhost:${port}/admin`);
+      console.log(`Server is running on http://localhost:${port}`);
     });
   })
   .catch((err) => {
